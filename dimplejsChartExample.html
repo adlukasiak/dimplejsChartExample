@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<!-- Bootstrap -->
+    	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+		<title>D3 Page Template</title>
+		<script type="text/javascript" src="/js/d3.v3.min.js"></script>
+		<script type="text/javascript" src="/js/dimple.v1.1.1.js"></script>
+		<!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
+		<!--<script src="http://dimplejs.org/dist/dimple.v1.1.1.min.js"></script>-->
+  		<script src="js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<p>Data Hardcoded in JavaScript<div id="vis_js"></div></p><br>
+			</div>
+			<div class="row-fluid">	
+				<p>Data from Json data file<div id="vis_json"></div></p>
+			</div>
+			<div class="row-fluid">	
+				<p>Data from tsv data file<div id="vis_tsv"></div></p>
+			</div>
+		</div>		
+		<script type="text/javascript">
+			<!--d3.select("body").append("p").text("vis with data hardcoded in JavaScript");-->
+			var svg = dimple.newSvg("#vis_js",590,400);
+			data = [
+				{ "Bin":"1.0", "Frequency":"84" },
+				{ "Bin":"19.4", "Frequency":"186" },
+				{ "Bin":"37.8", "Frequency":"103" },
+			];
+			console.log("data hadcoded");
+			console.log(data);
+      		var myChart = new dimple.chart(svg, data);
+      		myChart.setBounds(60, 30, 510, 305)
+      		var x = myChart.addCategoryAxis("x", "Bin");
+      		x.addOrderRule("Bin");
+      		myChart.addMeasureAxis("y", "Frequency");
+      		myChart.addSeries(null, dimple.plot.bar);
+      		myChart.draw();
+
+      		<!--d3.select("body").append("p").text("vis with data from json data file");-->
+			var svg = dimple.newSvg("#vis_json",590,400);
+			d3.json("/data/sample_data.json", function (data) {
+				console.log("data from json");
+				console.log(data);
+      			var myChart = new dimple.chart(svg, data);
+      			myChart.setBounds(60, 30, 510, 305)
+      			var x = myChart.addCategoryAxis("x", "Bin");
+      			x.addOrderRule("Bin");
+      			myChart.addMeasureAxis("y", "Frequency");
+      			myChart.addSeries(null, dimple.plot.bar);
+      			myChart.draw();
+			});
+
+			<!--d3.select("body").append("p").text("vis with data from tsv data file");-->
+    		var svg2 = dimple.newSvg("#vis_tsv", 590, 400);
+    		d3.tsv("/data/sample_data.tsv", function (data) {
+    			console.log("data from tsv");
+    			console.log(data);
+      			var myChart = new dimple.chart(svg2, data);
+      			myChart.setBounds(60, 30, 510, 305)
+      			var x = myChart.addCategoryAxis("x", "Bin");
+      			x.addOrderRule("Bin");
+      			myChart.addMeasureAxis("y", "Frequency");
+      			myChart.addSeries(null, dimple.plot.bar);
+      			myChart.draw();
+    		});
+  		</script>
+	</body>	
+</html>
