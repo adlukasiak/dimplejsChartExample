@@ -1,4 +1,4 @@
-This example shows how to create dimplejs Chart from json, tsv and hardcoded simple json table with data.
+This example illustrates how to create dimplejs Chart from json, tsv and hardcoded simple json table.
 
 To play with it:
  - Checkout the projct
